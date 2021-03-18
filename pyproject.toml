@@ -18,6 +18,7 @@ jupyter = "^1.0.0"
 ipykernel = "^5.5.0"
 jupyterlab = "^3.0.11"
 jupyterlab-git = "^0.23.3"
+nltk = "^3.5"
 
 [tool.poetry.dev-dependencies]
 
