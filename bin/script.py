@@ -50,7 +50,7 @@ def embed(data):
     return out
 
 
-dev_X, test_X, train_X = [embed(data) for data in [dev_X, test_X, train_X]]o
+dev_X, test_X, train_X = [embed(data) for data in [dev_X, test_X, train_X]]
 
 
 clf = SVC()
