@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#SBATCH --job-name=nobr_svc_syp
+#SBATCH --output=svc.out
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu
+#SBATCH --time=00:05:00
+#SBATCH --partition=brown
+#SBATCH --mail-type=FAIL, END
+
+./script.sh

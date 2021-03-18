@@ -4,7 +4,6 @@ from nltk.tokenize import word_tokenize
 import gensim
 from sklearn.svm import SVC
 from sklearn.metrics import f1_score
-from tqdm import tqdm
 
 def reader(file):
     data = []
