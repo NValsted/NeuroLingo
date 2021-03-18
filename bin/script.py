@@ -57,4 +57,5 @@ dev_X, test_X, train_X = [embed(data) for data in [dev_X, test_X, train_X]]o
 clf = SVC()
 clf.fit(train_X, train_y)
 p = clf.predict(dev_X)
-f1_score(dev_y, p)
+print(f1_score(dev_y, p))
+
