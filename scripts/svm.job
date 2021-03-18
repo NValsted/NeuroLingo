@@ -8,9 +8,8 @@
 #SBATCH --partition=brown
 #SBATCH --mail-type=FAIL, END
 
+cd ../
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 source ~/.poetry/env
-cd neurolingo/
 poetry install
-cd bin/
-python script.py
+python ./bin/script.py
