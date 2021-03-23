@@ -26,28 +26,26 @@ def reader(file):
 dev, test, train = [reader(file) for file in ['music_reviews_dev.json',
                                               'music_reviews_test_masked.json',
                                               'music_reviews_train.json']]
-print("DATA LOADED")
+
 def tokenize(file):
         X = []
         y = []
         for review in file:
             if 'reviewText' in review.keys():
                 X.append(word_tokenize(review['reviewText']))
-                if review['sentiment'] == 'positive':
-                    y.append(1)
-                elif review['sentiment'] == 'negative':
-                    y.append(0)
-                else:
-                    y.append(-1)
+                y.append(1)
+            else:
+                y.append(-1)
+                X.append("_")
+        
         return X, y
 
-dev_tok, test_tok, train_tok = [tokenize(file) for file in [dev, test, train]]
-dev_X, dev_y, test_X, test_y, train_X, train_y = dev_tok[0], dev_tok[1], test_tok[0], test_tok[1], train_tok[0], train_tok[1]
+test_X, test_y = tokenize(test)
 
-print("LOADING EMBEDDINGS")
+#print("LOADING EMBEDDINGS")
 model = gensim.models.KeyedVectors.load_word2vec_format('../data/twitter.bin', binary=True)
 vocab = set(model.vocab.keys())
-print("EMBEDDINGS LOADED")
+#print("EMBEDDINGS LOADED")
 
 def embed(data):
     out = []
@@ -59,15 +57,22 @@ def embed(data):
         out.append(t)
     return out
 
-print("STARTED HERE")
+#print("STARTED HERE")
 
-dev_X, test_X, train_X = [embed(data) for data in [dev_X, test_X, train_X]]
+test_X = embed(test_X)
 
-print("TRAINING")
-clf = make_pipeline(StandardScaler(),SVC(max_iter = 100000))
-clf.fit(train_X, train_y)
-p = clf.predict(dev_X)
+pred = []
+counter = 0
+#print("PREDICTING")
+clf = pickle.load(open("SVM","rb"))
+for x_inst,y_inst in zip(test_X,test_y):
+    if y_inst == -1:
+        counter += 1
+        pred.append(1)
+    else:
+        pred.append(clf.predict(x_inst.reshape(1,-1))[0])
 
-print(f1_score(dev_y, p))
-
-pickle.dump(clf,open("SVM","wb"))
+#print("NO TEXT DATA COUNTER:",counter)
+print("id,prediction")
+for i in range(len(pred)):
+    print(f"{test[i]['id']},{pred[i]}")
