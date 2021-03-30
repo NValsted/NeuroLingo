@@ -1,0 +1,21 @@
+name: First thing
+
+on:
+  commit:
+    master
+  schedule:
+    - cron: "0 8 * * *"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git Repo
+        uses: actions/checkout@master 
+    
+      - name: My Own Script
+        run: |
+          # VARIABLES
+          echo 'hello world'  
+      - build docker image and scp into HPC
+UN

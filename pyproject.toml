@@ -20,6 +20,8 @@ jupyterlab = "^3.0.11"
 jupyterlab-git = "^0.23.3"
 nltk = "^3.5"
 gensim = "^3.8.3"
+checklist = "^0.0.10"
+spacy = "^3.0.5"
 
 [tool.poetry.dev-dependencies]
 
